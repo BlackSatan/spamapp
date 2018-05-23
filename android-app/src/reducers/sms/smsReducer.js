@@ -1,25 +1,28 @@
 import { handleActions } from 'redux-actions'
-import { fromJS } from 'immutable'
-import { setMessages, markAsSpam, unMarkAsSpam } from './smsActions'
+import { Map } from 'immutable'
+import { setMessagesAction, markAsSpamAction, unMarkAsSpamAction } from './smsActions'
 import initialState from './smsInitialState'
 
 export default handleActions({
-  [setMessages]: (state, { payload }) => {
+  [setMessagesAction]: (state, { payload }) => {
     const { messages } = payload
-
-    return state.set('messages', fromJS(messages.map(message => ({
+    const newMessages = messages.map(message => Map({
       id: message._id,
       address: message.address,
       date: message.date,
       text: message.body,
-      isSpam: false
-    }))))
+      isSpam: message.isSpam
+    }))
+    return state.update(
+      'messages',
+      messages => messages.push(...newMessages)
+    )
   },
-  [markAsSpam]: (state, { payload }) => state.updateIn([
+  [markAsSpamAction]: (state, { payload }) => state.updateIn([
     'messages',
     state.get('messages').findIndex(message => message.get('id') === payload.id)
   ], item => item.set('isSpam', true)),
-  [unMarkAsSpam]: (state, { payload }) => state.updateIn([
+  [unMarkAsSpamAction]: (state, { payload }) => state.updateIn([
     'messages',
     state.get('messages').findIndex(message => message.get('id') === payload.id)
   ], item => item.set('isSpam', false))

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Container, Content, Tab, Tabs } from 'native-base'
+import { Container, Tab, Tabs } from 'native-base'
 import Message from '../../components/Message'
 import { loadMessages, markAsSpam, unMarkAsSpam } from '../../reducers/sms/smsActions'
 import { makeSelectGoodMessages, makeSelectSpamMessages } from '../../reducers/sms/smsSelectors'
@@ -9,10 +9,26 @@ import MessagesList from '../../components/MessagesList'
 
 class App extends React.PureComponent {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      smsListenerId: null
+    }
+  }
+
   componentDidMount () {
     const { doLoadMessages } = this.props
 
     doLoadMessages()
+    const smsListenerId = setInterval(() => doLoadMessages(), 3000)
+    this.setState({ smsListenerId })
+  }
+
+  componentWillUnmount() {
+    const { smsListenerId } = this.props
+
+    smsListenerId && clearInterval(smsListenerId)
   }
 
   render () {
@@ -52,10 +68,10 @@ export default connect(createStructuredSelector({
   doLoadMessages () {
     dispatch(loadMessages())
   },
-  onSpam(id) {
-    dispatch(markAsSpam({ id }));
+  onSpam (id) {
+    dispatch(markAsSpam({ id }))
   },
-  onUnSpam(id) {
-    dispatch(unMarkAsSpam({ id }));
+  onUnSpam (id) {
+    dispatch(unMarkAsSpam({ id }))
   }
 }))(App)

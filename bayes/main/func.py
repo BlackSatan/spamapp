@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import _pickle as cPickle
 
-def prepare_data():
+def prepare_data(tr=None, ts=None):
     mails = pd.read_csv('spam.csv', encoding = 'latin-1')
     mails.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis = 1, inplace = True)
     mails.rename(columns = {'v1': 'labels', 'v2': 'message'}, inplace = True)
@@ -24,6 +24,7 @@ def prepare_data():
             testIndex += [i]
     trainData = mails.loc[trainIndex]
     testData = mails.loc[testIndex]
+    print(testData)
     trainData.reset_index(inplace=True)
     trainData.drop(['index'], axis=1, inplace=True)
     return [trainData, testData]
@@ -199,7 +200,7 @@ def metrics(labels, predictions):
 # print(testData)
 
 
-def run_train():
+def run_train(rm=None, add=None):
     try:
         data = prepare_data()
         trainData = data[0]

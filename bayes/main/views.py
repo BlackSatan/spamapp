@@ -10,9 +10,10 @@ from django.views import View
 
 
 class CheckSms(View):
-    def get(self, request):
-        request_sms = json.loads(list(request.GET.keys())[0])['sms']
-        print(json.loads(list(request.GET.keys())[0])['sms'])
+    def post(self, request):
+        print(json.loads(request.body)['sms'])
+        request_sms = json.loads(request.body)['sms']
         assert isinstance(request_sms, list), 'ERROR ISINSTANCE'
         result_list = classify_words(request_sms)
+        print(result_list)
         return JsonResponse(data={'result': result_list}, status=200)

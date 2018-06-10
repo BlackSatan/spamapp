@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from 'native-base'
+import { List, Content } from 'native-base'
 
 export default class MessagesList extends React.PureComponent {
 
@@ -7,9 +7,11 @@ export default class MessagesList extends React.PureComponent {
     const { children } = this.props;
 
     return (
-      <List>
-        {children}
-      </List>
+      <Content scrollEnabled={true}>
+        <List>
+          {children}
+        </List>
+      </Content>
     );
   }
 }

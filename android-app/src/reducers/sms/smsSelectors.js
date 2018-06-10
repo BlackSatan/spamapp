@@ -1,10 +1,13 @@
+import { List } from 'immutable'
 import { createSelector } from 'reselect';
 
 const selectSms = state => state.sms
 
 const makeSelectMessages = () => createSelector(
   selectSms,
-  state => state.get('messages')
+  state => state
+    .get('messages', List())
+    .sort((a, b) => b.get('date') - a.get('date'))
 )
 
 export const makeSelectSpamMessages = () => createSelector(

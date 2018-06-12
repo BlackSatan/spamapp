@@ -6,22 +6,8 @@
  * message is displayed to the user
  *
  */
-'use strict'
-
-/**
- * ## Imports
- *
- * validate and underscore
- *
- */
 import validate from 'validate.js'
 import _ from 'underscore'
-/**
- * ### Translations
- */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
 
 /**
  * ## Email validation setup
@@ -90,7 +76,7 @@ export default function fieldValidation (state, action) {
       } else {
         return state.setIn(['form', 'fields', 'usernameHasError'], true)
         .setIn(['form', 'fields', 'usernameErrorMsg'],
-               I18n.t('FieldValidation.valid_user_name'))
+               'FieldValidation.valid_user_name')
       }
     }
 
@@ -106,7 +92,7 @@ export default function fieldValidation (state, action) {
       } else {
         return state.setIn(['form', 'fields', 'emailHasError'], true)
         .setIn(['form', 'fields', 'emailErrorMsg'],
-                 I18n.t('FieldValidation.valid_email'))
+                 'FieldValidation.valid_email')
       }
     }
 
@@ -125,7 +111,7 @@ export default function fieldValidation (state, action) {
       } else {
         return state.setIn(['form', 'fields', 'passwordHasError'], true)
         .setIn(['form', 'fields', 'passwordErrorMsg'],
-          I18n.t('FieldValidation.valid_password'))
+          'FieldValidation.valid_password')
       }
     }
 
@@ -145,7 +131,7 @@ export default function fieldValidation (state, action) {
         return state.setIn(['form', 'fields', 'passwordAgainHasError'],
                           true)
         .setIn(['form', 'fields', 'passwordAgainErrorMsg'],
-        I18n.t('FieldValidation.valid_password_again'))
+        'FieldValidation.valid_password_again')
       }
 
     /**

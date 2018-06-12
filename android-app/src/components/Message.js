@@ -25,26 +25,26 @@ export default class Message extends React.PureComponent {
     const { address, text, date, isSpam } = this.props;
 
     return (
-      <ListItem>
+      <ListItem avatar>
         <Body>
           <Text>{address}</Text>
           <Text note>{text}</Text>
         </Body>
         <Right>
-          <Text note>{Moment(date).format('MM/DD h:mm')}</Text>
-          <Picker
-            mode="dropdown"
-            selectedValue={this.state.selected}
-            style={{ width: 150 }}
-            onValueChange={this.onValueChange.bind(this)}
-          >
-            <Picker.Item label="Action" value="key0" />
-            {isSpam ? <Picker.Item label="Remove from spam" value="key1"/>
-              : <Picker.Item label="Mark as spam" value="key2"/>
-            }
-          </Picker>
+          <Text style={{ fontSize: 11 }} note>{Moment(date).format('MM/DD h:mm')}</Text>
+          {/*<Picker*/}
+            {/*mode="dropdown"*/}
+            {/*selectedValue={this.state.selected}*/}
+            {/*style={{ width: 150 }}*/}
+            {/*onValueChange={this.onValueChange.bind(this)}*/}
+          {/*>*/}
+            {/*<Picker.Item label="Action" value="key0" />*/}
+            {/*{isSpam ? <Picker.Item label="Remove from spam" value="key1"/>*/}
+              {/*: <Picker.Item label="Mark as spam" value="key2"/>*/}
+            {/*}*/}
+          {/*</Picker>*/}
         </Right>
       </ListItem>
-    );
+    )
   }
 }

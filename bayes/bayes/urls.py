@@ -19,5 +19,7 @@ from main.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('check-sms', CheckSms.as_view())
+    path('check-sms', CheckSms.as_view()),
+    path('add-spam', AddSpam.as_view()),
+    path('remove-spam', DeleteSpam.as_view())
 ]

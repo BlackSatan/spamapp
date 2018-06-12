@@ -10,8 +10,8 @@ import pandas as pd
 import numpy as np
 import _pickle as cPickle
 
-def prepare_data(tr=None, ts=None):
-    mails = pd.read_csv('spam.csv', encoding = 'latin-1')
+def prepare_data():
+    mails = pd.read_csv('spam1.csv', encoding = 'latin-1')
     mails.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis = 1, inplace = True)
     mails.rename(columns = {'v1': 'labels', 'v2': 'message'}, inplace = True)
     mails['label'] = mails['labels'].map({'ham': 0, 'spam': 1})
@@ -200,23 +200,23 @@ def metrics(labels, predictions):
 # print(testData)
 
 
-def run_train(rm=None, add=None):
+def run_train():
     try:
         data = prepare_data()
         trainData = data[0]
         testData = data[1]
-        # sc_tf_idf = SpamClassifier(trainData, 'tf-idf')
-        # sc_tf_idf.train()
-        # with open('sc_tf_idf.pkl', 'wb') as fid:
-        #     cPickle.dump(sc_tf_idf, fid)
-        # preds_tf_idf = sc_tf_idf.predict(testData['message'])
-        # print(metrics(testData['label'], preds_tf_idf))
-        sc_bow = SpamClassifier(trainData, 'bow')
-        sc_bow.train()
-        with open('sc_bow.pkl', 'wb') as fid:
-            cPickle.dump(sc_bow, fid)
-        preds_bow = sc_bow.predict(testData['message'])
-        print(metrics(testData['label'], preds_bow))
+        sc_tf_idf = SpamClassifier(trainData, 'tf-idf')
+        sc_tf_idf.train()
+        with open('sc_tf_idf.pkl', 'wb') as fid:
+            cPickle.dump(sc_tf_idf, fid)
+        preds_tf_idf = sc_tf_idf.predict(testData['message'])
+        print(metrics(testData['label'], preds_tf_idf))
+        # sc_bow = SpamClassifier(trainData, 'bow')
+        # sc_bow.train()
+        # with open('sc_bow.pkl', 'wb') as fid:
+        #     cPickle.dump(sc_bow, fid)
+        # preds_bow = sc_bow.predict(testData['message'])
+        # print(metrics(testData['label'], preds_bow))
         print('OK, MODEL IS TRAINED')
     except Exception as e:
         print('MODEL DID NOT TRAIN, EXCEPTION: {}'.format(e))
